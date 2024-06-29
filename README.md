@@ -7,7 +7,7 @@ The main motivation of this project is to build a solution to mitigate the issue
 LinkWiz is a URL shortener service which generates a unique `shortId` of 6 characters to each request for URL shortening, This unique identifier is securely stored in the database, serving as a reference to the original URL. It also ensures proper data security and validation of every input data.
 
 ## UI
-![[Pasted image 20240630012830.png]]
+![LinkWiz](./ui-design.png)
 
 ## Implementation
 
