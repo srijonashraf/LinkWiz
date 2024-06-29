@@ -8,7 +8,7 @@ const AppNavbar = () => {
       <Navbar.Brand href="#">
         <span className="flex items-center gap-1 self-center whitespace-nowrap text-xl font-bold text-indigo-800">
           <LuExternalLink />
-          Flowbite React
+          LinkWiz
         </span>
       </Navbar.Brand>
       <Button className="bg-indigo-700 text-white font-medium px-3 rounded-md ring-0 ring-white hover:bg-indigo-800">
