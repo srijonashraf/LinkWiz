@@ -7,10 +7,7 @@ import fetchLinkListContext from "../../context/fetchLinkListContext.js";
 
 const RecentShortener = () => {
   const [data, setData] = useState([]);
-
   const { fetchLinkList, setFetchLinkList } = useContext(fetchLinkListContext);
-
-  console.log(fetchLinkList);
   const fetchData = async () => {
     try {
       const cookies = Cookies.get();
