@@ -20,7 +20,7 @@ Used `nanoId` for generating `shortId` and `Joi` for schema validation.
 
 ### Link Insights
 
-- **Clicks**
+- **Count Clicks**:
   Whenever the link is viewed, the click count will increase, and this information will be displayed on the home page.
 
 
