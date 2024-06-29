@@ -19,8 +19,9 @@ app.use(helmet());
 app.use(hpp());
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: `http://localhost:5174`,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -40,6 +41,18 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+// Manually set CORS headers if needed
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+  res.header("Access-Control-Allow-Origin", "http://localhost:5174"); // Ensure correct origin
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use("/", publicRouter);
 

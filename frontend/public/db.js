@@ -2,7 +2,7 @@ export const data = [
   {
     _id: "667f038d4c625ca5528609bf",
     originalUrl:
-      "https://www.kaggle.com/code/srijonashraf/maize-leaf-disease-detection-six-efficientnet/edit",
+      "http://localhost:5173/test",
     shortUrl: "TCfUqc",
     clicks: 0,
     createdAt: "2024-06-28T18:40:13.979Z",

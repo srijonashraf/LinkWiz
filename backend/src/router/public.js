@@ -9,6 +9,6 @@ const publicRouter = express.Router();
 
 publicRouter.post("/shorten", createShortUrl);
 publicRouter.get("/shorten", getOriginalUrl);
-publicRouter.get("/recent-links", fetchRecentLinkStats);
+publicRouter.post("/recent-links", fetchRecentLinkStats);
 
 export default publicRouter;

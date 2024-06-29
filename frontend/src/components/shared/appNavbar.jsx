@@ -11,7 +11,7 @@ const AppNavbar = () => {
           Flowbite React
         </span>
       </Navbar.Brand>
-      <Button className="bg-indigo-700 text-white font-medium px-1 rounded-md ring-0 ring-white hover:bg-indigo-800">
+      <Button className="bg-indigo-700 text-white font-medium px-3 rounded-md ring-0 ring-white hover:bg-indigo-800">
         Get Started
       </Button>
     </Navbar>

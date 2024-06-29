@@ -1,12 +1,11 @@
 import Joi from "joi";
 import { linkModel } from "../model/link.js";
 import { generateShortUrl } from "../utils/shortener.js";
+import { baseUrl } from "../constants/BaseUrl.js";
+
 const createCollection = async (url, id) => {
   try {
-    const response = await linkModel.create({
-      originalUrl: url,
-      shortUrl: id,
-    });
+    const response = await linkModel.create({ originalUrl: url, shortUrl: id });
     return response;
   } catch (error) {
     throw error;
@@ -24,6 +23,7 @@ export const createShortUrl = async (req, res) => {
 
     // Validate input
     const { error, value } = schema.validate(input);
+
     // Show error in case of invalid link
     if (error) {
       return res.status(400).json({
@@ -36,43 +36,31 @@ export const createShortUrl = async (req, res) => {
     url = value.url;
 
     // Generate short id
-    const id = generateShortUrl();
+    let id = generateShortUrl();
+    let result;
 
-    // Attempt to create collection entry
-    const result = await createCollection(url, id);
-
-    if (!result) {
-      return res
-        .status(200)
-        .json({ status: "fail", message: "Failed to create short url" });
+    // Attempt to create collection entry, retry on duplicate key error
+    while (true) {
+      try {
+        result = await createCollection(url, id);
+        break;
+      } catch (error) {
+        if (error.name === "MongoServerError" && error.code === 11000) {
+          id = generateShortUrl(); // Generate new ID and retry
+        } else {
+          throw error;
+        }
+      }
     }
 
     // Respond with success message
     return res
       .status(200)
-      .cookie(id, url, { httpOnly: true, sameSite: "None", secure: false })
-      .json({ status: "success", message: "Short Url created", data: result });
+      .cookie(id, url, { httpOnly: false, sameSite: "None", secure: true })
+      .json({ status: "success", message: "Short URL created", data: result });
   } catch (error) {
     // Log error for debugging purposes
     console.error("Error occurred:", error);
-
-    // Handle MongoDB duplicate key error with retry
-    if (error.name === "MongoServerError" && error.code === 11000) {
-      const id = generateShortUrl();
-      const retryResult = await createCollection(url, id);
-
-      // Retry success response
-      if (retryResult) {
-        return res
-          .status(200)
-          .cookie(id, url, { httpOnly: true, sameSite: "None", secure: false })
-          .json({
-            status: "success",
-            message: "Short URL created (after retry)",
-            data: retryResult,
-          });
-      }
-    }
 
     // Handle other errors
     return res
@@ -100,7 +88,7 @@ export const getOriginalUrl = async (req, res) => {
     }
 
     //Redirect to original url
-    res.redirect(response.originalUrl);
+    return res.redirect(response.originalUrl);
   } catch (error) {
     console.error("Error occurred:", error);
     return res
@@ -111,10 +99,35 @@ export const getOriginalUrl = async (req, res) => {
 
 export const fetchRecentLinkStats = async (req, res) => {
   try {
-    //Extract short urls from cookies
-    const recentUrls = Object.keys(req.cookies);
+    //Get cookie object from body
+    const reqBodyObject = req.body;
 
-    // Fetch the collection which matches the short URLs
+    // Validation schema
+    const schema = Joi.object().pattern(
+      Joi.string(),
+      Joi.string().uri().required()
+    );
+
+    // Validate request body using Joi schema
+    const { error } = schema.validate(reqBodyObject);
+
+    if (error) {
+      // Joi validation failed
+      return res.status(400).json({
+        status: "fail",
+        message: "Invalid request body",
+        error: error.details.map((err) => err.message),
+      });
+    }
+
+    if (!reqBodyObject || Object.keys(reqBodyObject).length === 0) {
+      return res
+        .status(400)
+        .json({ status: "fail", message: "No cookies provided" });
+    }
+
+    const recentUrls = Object.keys(reqBodyObject);
+
     const response = await linkModel
       .find({ shortUrl: { $in: recentUrls } })
       .exec();
@@ -125,12 +138,9 @@ export const fetchRecentLinkStats = async (req, res) => {
         .json({ status: "fail", message: "Link is broken or not found" });
     }
 
-    res.status(200).json({ status: "success", data: response });
+    return res.status(200).json({ status: "success", data: response });
   } catch (error) {
-    //Log errors for debugging
     console.error("Error occurred:", error);
-
-    //Send error response
     return res
       .status(500)
       .json({ status: "fail", message: "Internal Server Error" });
