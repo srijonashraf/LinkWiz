@@ -90,11 +90,7 @@ const RecentShortener = () => {
             ))}
           </tbody>
         </table>
-      ) : (
-        <p className="text-center py-4 text-gray-600 dark:text-gray-400">
-          No recent links found.
-        </p>
-      )}
+      ) : null}
     </div>
   );
 };
