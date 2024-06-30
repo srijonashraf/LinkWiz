@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getBaseURL } from "./../utils/baseUrl";
+import { Cookies } from "js-cookie";
 
 const BASE_URL = getBaseURL();
 
@@ -12,6 +13,7 @@ export const createShortUrl = async (originalUrl) => {
       { url: originalUrl },
       { withCredentials: true }
     );
+    Cookies.set(response.data.shortUrl, response.data.originalUrl); //Set cookies manually
     if (response.data.status === "success") {
       return response.data;
     } else {
