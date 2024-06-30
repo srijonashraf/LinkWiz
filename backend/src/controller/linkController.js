@@ -53,10 +53,20 @@ export const createShortUrl = async (req, res) => {
       }
     }
 
+    const domain =
+      process.env.NODE_ENV === "development"
+        ? "localhost"
+        : "linkwiz.netlify.app";
+
     // Respond with success message
     return res
       .status(200)
-      .cookie(id, url, { httpOnly: false, sameSite: "None", secure: true })
+      .cookie(id, url, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        domain: domain,
+      })
       .json({ status: "success", message: "Short URL created", data: result });
   } catch (error) {
     // Log error for debugging purposes
