@@ -140,6 +140,7 @@ export const fetchRecentLinkStats = async (req, res) => {
 
     const response = await linkModel
       .find({ shortUrl: { $in: recentUrls } })
+      .sort({ createdAt: -1 })
       .exec();
 
     if (!response || response.length === 0) {
