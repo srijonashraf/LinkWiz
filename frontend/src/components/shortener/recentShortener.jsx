@@ -12,7 +12,6 @@ const RecentShortener = () => {
   const fetchData = async () => {
     try {
       const cookies = Cookies.get();
-      console.log(cookies);
       const response = await fetchRecentLinkStats(cookies);
       setData(response);
     } catch (error) {
