@@ -27,7 +27,9 @@ export const createShortUrl = async (originalUrl) => {
 export const fetchRecentLinkStats = async (cookieObject) => {
   const URL = `${BASE_URL}/recent-links`;
   try {
-    const response = await axios.post(URL, cookieObject);
+    const response = await axios.post(URL, cookieObject, {
+      withCredentials: true,
+    });
 
     if (response.data.status === "success") {
       return response.data.data;
