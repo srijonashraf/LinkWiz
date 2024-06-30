@@ -13,7 +13,7 @@ export const createShortUrl = async (originalUrl) => {
       { url: originalUrl },
       { withCredentials: true }
     );
-    Cookies.set(response.data.shortUrl, response.data.originalUrl); //Set cookies manually
+    Cookies.set(response.data.data.shortUrl, response.data.data.originalUrl); //Set cookies manually
     if (response.data.status === "success") {
       return response.data;
     } else {
