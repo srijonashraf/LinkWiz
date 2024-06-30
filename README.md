@@ -35,7 +35,7 @@ Used `nanoId` for generating `shortId` and `Joi` for schema validation.
 
 2. Configure Settings: 
 
-Create a `.env` file and copy the variables from the `.env.example` file into it. Then, replace the placeholder values with your own configuration settings.
+   Create a `.env` file and copy the variables from the `.env.example` file into it. Then, replace the placeholder values with your own configuration settings.
 
 
 3. Install all dependencies and run the servers:
