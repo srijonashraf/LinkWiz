@@ -19,7 +19,10 @@ app.use(helmet());
 app.use(hpp());
 
 const corsOptions = {
-  origin: `http://localhost:5174`,
+  origin:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5173"
+      : "https://linkwiz.netlify.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
@@ -43,13 +46,18 @@ mongoose
   });
 
 // Manually set CORS headers if needed
+const isDevelopment = process.env.NODE_ENV === "development";
+const allowedOrigin = isDevelopment
+  ? "http://localhost:5173"
+  : "https://linkwiz.netlify.app";
+
 app.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-  res.header("Access-Control-Allow-Origin", "http://localhost:5174"); // Ensure correct origin
+  res.header("Access-Control-Allow-Origin", allowedOrigin);
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
