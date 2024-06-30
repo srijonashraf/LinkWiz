@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getBaseURL } from "./../utils/baseUrl";
-import { Cookies } from "js-cookie";
+import Cookies from "js-cookie";
 
 const BASE_URL = getBaseURL();
 
