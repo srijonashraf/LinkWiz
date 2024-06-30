@@ -53,3 +53,7 @@ Used `nanoId` for generating `shortId` and `Joi` for schema validation.
 ## API Documentation
 
 https://documenter.getpostman.com/view/28939375/2sA3duEsiS
+
+## Site Deployed:
+
+https://linkwiz.netlify.app/
