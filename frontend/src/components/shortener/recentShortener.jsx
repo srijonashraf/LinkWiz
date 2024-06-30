@@ -4,6 +4,7 @@ import { fetchRecentLinkStats } from "../../api/apiRequest.js";
 import Cookies from "js-cookie";
 import { successToast } from "../../helper/toaster.js";
 import fetchLinkListContext from "../../context/fetchLinkListContext.js";
+import { getBaseURL } from "../../utils/baseUrl.js";
 
 const RecentShortener = () => {
   const [data, setData] = useState([]);
@@ -22,12 +23,11 @@ const RecentShortener = () => {
     fetchData();
   }, [fetchLinkList]);
 
+  const baseUrl = getBaseURL();
+
   const handleLinkClick = async (shortUrl) => {
     setFetchLinkList(Date.now());
-    window.open(
-      `${import.meta.env.VITE_BACKEND_URL_DEV}/shorten?url=${shortUrl}`,
-      "_blank"
-    );
+    window.open(`${baseUrl}/shorten?url=${shortUrl}`, "_blank");
   };
 
   return (
@@ -72,9 +72,7 @@ const RecentShortener = () => {
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `${import.meta.env.VITE_BACKEND_URL_DEV}/shorten?url=${
-                          item.shortUrl
-                        }`
+                        `${baseUrl}/shorten?url=${item.shortUrl}`
                       );
                       successToast("Copied short URL");
                     }}
