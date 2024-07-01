@@ -10,7 +10,7 @@ const Landing = () => {
         Free URL Shortener
         <IoIosLink />
       </h1>
-      <Card className="sm:w-3/4 lg:w-3/5 w-full bg-white hover:bg-white flex">
+      <Card className="sm:w-3/4 lg:w-3/5 w-full p-5 bg-white hover:bg-white flex">
         <CreateShortener />
         <RecentShortener />
       </Card>
