@@ -31,62 +31,64 @@ const RecentShortener = () => {
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-5 max-w-full">
+    <>
       {data && data.length > 0 ? (
-        <table className="w-full min-w-max text-sm text-left">
-          <tbody>
-            {data.map((item, key) => (
-              <tr
-                key={key}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              >
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white max-w-[300px] overflow-hidden overflow-ellipsis"
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-5 max-w-full">
+          <table className="w-full min-w-max text-sm text-left">
+            <tbody>
+              {data.map((item, key) => (
+                <tr
+                  key={key}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 >
-                  {item.originalUrl.slice(0, 80) + "......"}
-                </td>
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-bold text-indigo-800 whitespace-nowrap dark:text-white cursor-pointer"
-                >
-                  <div className="flex items-center">
-                    <span
-                      onClick={() => handleLinkClick(item.shortUrl)}
-                      className="flex items-center gap-1"
-                    >
-                      <span className="max-w-[200px] overflow-hidden overflow-ellipsis">
-                        {item.shortUrl}
-                      </span>
-                      <LuExternalLink />
-                    </span>
-                  </div>
-                </td>
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-bold text-sm text-dark-800 whitespace-nowrap dark:text-white"
-                >
-                  Clicks: {item.clicks}
-                </td>
-                <td className="px-6 py-4">
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `${baseUrl}/shorten?url=${item.shortUrl}`
-                      );
-                      successToast("Copied short URL");
-                    }}
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white max-w-[300px] overflow-hidden overflow-ellipsis"
                   >
-                    Copy
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    {item.originalUrl.slice(0, 80) + "......"}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-bold text-indigo-800 whitespace-nowrap dark:text-white cursor-pointer"
+                  >
+                    <div className="flex items-center">
+                      <span
+                        onClick={() => handleLinkClick(item.shortUrl)}
+                        className="flex items-center gap-1"
+                      >
+                        <span className="max-w-[200px] overflow-hidden overflow-ellipsis">
+                          {item.shortUrl}
+                        </span>
+                        <LuExternalLink />
+                      </span>
+                    </div>
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-bold text-sm text-dark-800 whitespace-nowrap dark:text-white"
+                  >
+                    Clicks: {item.clicks}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `${baseUrl}/shorten?url=${item.shortUrl}`
+                        );
+                        successToast("Copied short URL");
+                      }}
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                    >
+                      Copy
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : null}
-    </div>
+    </>
   );
 };
 

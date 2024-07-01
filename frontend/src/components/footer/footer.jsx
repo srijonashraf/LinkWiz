@@ -1,28 +1,16 @@
-import { Footer } from "flowbite-react";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import React from "react";
 
-const FooterComponent = () => {
+const Footer = () => {
   return (
-    <Footer container>
-      <div className="w-full text-center bg-gray-800 text-white py-8">
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center sm:items-start space-y-4 sm:space-y-0">
-          <Footer.Brand
-            href=""
-            src=""
-            alt=""
-            name="LinkWiz"
-            className="text-2xl font-bold"
-          />
-        </div>
-        <Footer.Divider className="my-4" />
-        <Footer.Copyright
-          href="https://github.com/srijonashraf"
-          by="LinkWiz"
-          year={new Date().getFullYear()}
-        />
-      </div>
-    </Footer>
+    <div className="bg-slate-600 text-center h-[50px] flex justify-center items-center">
+      <p className="font-semibold text-gray-300">
+        Made by{" "}
+        <a target="blank" href="https://github.com/srijonashraf">
+          <u>Srijon Ashraf</u>
+        </a>
+      </p>
+    </div>
   );
 };
 
-export default FooterComponent;
+export default Footer;
